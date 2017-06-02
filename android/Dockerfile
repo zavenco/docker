@@ -63,7 +63,7 @@ RUN echo "no" | /opt/android-sdk-linux/tools/android create avd \
                 --target "android-24" \
                 --abi "armeabi-v7a" \
                 --skin WVGA800 \
-                --sdcard 512M\
+                --sdcard 512M
 
 # Install openssh
 RUN apt-get update -y
