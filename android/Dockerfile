@@ -45,9 +45,11 @@ RUN cp -r ./android-sdk-linux/tools/* /opt/android-sdk-linux/tools/
 ENV ANDROID_HOME /opt/android-sdk-linux
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools/
 
-RUN wget --output-document=gradle.zip --quiet https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip && unzip gradle.zip && mv ./gradle-4.0-milestone-1 /opt/gradle-4.0-milestone-1
+RUN mkdir /opt/.gradle
 
-ENV GRADLE_USER_HOME /opt/gradle-4.0-milestone-1
+RUN wget --quiet https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip && mv ./gradle-4.0-milestone-1-all.zip /opt/.gradle/
+
+ENV GRADLE_USER_HOME /opt/.gradle
 ENV PATH ${PATH}:/opt/gradle-4.0-milestone-1/bin
 
 RUN mkdir -p "${ANDROID_HOME}/licenses"
