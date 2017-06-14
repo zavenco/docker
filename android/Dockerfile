@@ -30,41 +30,53 @@ COPY tools /opt/tools
 ENV PATH ${PATH}:/opt/tools
 
 # Download Android SDK
-RUN wget --output-document=android-sdk.tgz --quiet https://dl.google.com/android/android-sdk_r24.4.1-linux.tgz
-RUN tar xzf ./android-sdk.tgz && cp -r ./android-sdk-linux /opt/android-sdk-linux
-
-RUN chown -R root.root /opt/android-sdk-linux
-
-# Install and update tools
-RUN /opt/tools/android-accept-licenses.sh "/opt/android-sdk-linux/tools/android update sdk --all --no-ui --filter platform-tools,tools,build-tools-22.0.1,build-tools-23.0.3,build-tools-24.0.3,build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.3,android-21,android-22,android-23,android-24,android-25,extra-android-support,extra-android-m2repository,extra-google-m2repository,extra-google-google_play_services,sys-img-armeabi-v7a-android-24"
-
-# Fix tools
-RUN cp -r ./android-sdk-linux/tools/* /opt/android-sdk-linux/tools/
+RUN wget --output-document=android-sdk.tgz --quiet https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+RUN unzip android-sdk.tgz && mv ./tools /opt/tools
 
 # Export variables
-ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools/
+ENV ANDROID_HOME /opt/tools
+ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/emulator
 
-RUN mkdir -p /opt/.gradle/wrapper/dists
+# Install and update tools
+RUN mkdir /root/.android && echo 'count=0' > /root/.android/repositories.cfg
 
-RUN wget --quiet https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip && mv ./gradle-4.0-milestone-1-all.zip /opt/.gradle/wrapper/dists
+RUN echo yes | sdkmanager "tools"
+
+RUN echo yes | sdkmanager "platform-tools"
+
+RUN echo yes | sdkmanager "build-tools;25.0.3"
+RUN echo yes | sdkmanager "build-tools;25.0.1"
+RUN echo yes | sdkmanager "build-tools;25.0.0"
+RUN echo yes | sdkmanager "build-tools;24.0.3"
+RUN echo yes | sdkmanager "build-tools;23.0.3"
+RUN echo yes | sdkmanager "build-tools;22.0.1"
+
+RUN echo yes | sdkmanager "platforms;android-25"
+RUN echo yes | sdkmanager "platforms;android-24"
+RUN echo yes | sdkmanager "platforms;android-23"
+RUN echo yes | sdkmanager "platforms;android-22"
+RUN echo yes | sdkmanager "platforms;android-21"
+
+RUN echo yes | sdkmanager "extras;android;m2repository"
+RUN echo yes | sdkmanager "extras;google;m2repository"
+RUN echo yes | sdkmanager "extras;google;google_play_services"
+
+RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
+RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
+
+RUN echo yes | sdkmanager "system-images;android-24;google_apis;armeabi-v7a"
+
+
+# Install gradle
+RUN mkdir -p /opt/.gradle/wrapper/dists/gradle-4.0-milestone-1-all/2rnr7rhi2zsmkxo9re7615fy6
+RUN wget --quiet https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip && mv ./gradle-4.0-milestone-1-all.zip /opt/.gradle/wrapper/dists/gradle-4.0-milestone-1-all/2rnr7rhi2zsmkxo9re7615fy6/
+RUN unzip /opt/.gradle/wrapper/dists/gradle-4.0-milestone-1-all/2rnr7rhi2zsmkxo9re7615fy6/gradle-4.0-milestone-1-all.zip
 
 ENV GRADLE_USER_HOME /opt/.gradle
 
-RUN mkdir -p "${ANDROID_HOME}/licenses"
-RUN echo -e "\n8933bad161af4178b1185d1a37fbf41ea5269c55" > "${ANDROID_HOME}/licenses/android-sdk-license"
-RUN echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "${ANDROID_HOME}/licenses/android-sdk-preview-license"
-RUN echo -e "\nd975f751698a77b662f1254ddbeed3901e976f5a" > "${ANDROID_HOME}/licenses/intel-android-extra-license"
-
 # Create AVD
-RUN echo "no" | /opt/android-sdk-linux/tools/android create avd \
-                --force \
-                --device "Nexus 5" \
-                --name test \
-                --target "android-24" \
-                --abi "armeabi-v7a" \
-                --skin WVGA800 \
-                --sdcard 512M
+RUN echo no | avdmanager create avd -n acib -k "system-images;android-24;google_apis;armeabi-v7a" -f --abi "armeabi-v7a" --tag "google_apis"
+RUN emulator -avd acib -engine classic -no-window -verbose -qemu -m 512 &
 
 # Install openssh
 RUN apt-get update -y
