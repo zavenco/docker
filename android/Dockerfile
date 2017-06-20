@@ -19,7 +19,6 @@ RUN { \
 	} > /usr/local/bin/docker-java-home \
 	&& chmod +x /usr/local/bin/docker-java-home
 
-# do some fancy footwork to create a JAVA_HOME that's cross-architecture-safe
 RUN ln -svT "/usr/lib/jvm/java-7-openjdk-$(dpkg --print-architecture)" /docker-java-home
 
 # Install Deps
@@ -66,11 +65,10 @@ RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;co
 
 RUN echo yes | sdkmanager "system-images;android-24;google_apis;armeabi-v7a"
 
-
 # Install gradle
-RUN mkdir -p /opt/.gradle/wrapper/dists/gradle-4.0-milestone-1-all/2rnr7rhi2zsmkxo9re7615fy6
-RUN wget --quiet https://services.gradle.org/distributions/gradle-4.0-milestone-1-all.zip && mv ./gradle-4.0-milestone-1-all.zip /opt/.gradle/wrapper/dists/gradle-4.0-milestone-1-all/2rnr7rhi2zsmkxo9re7615fy6/
-RUN unzip /opt/.gradle/wrapper/dists/gradle-4.0-milestone-1-all/2rnr7rhi2zsmkxo9re7615fy6/gradle-4.0-milestone-1-all.zip
+RUN mkdir -p /opt/.gradle/wrapper/dists/gradle-4.0-rc-1-all/f2e4agya6jovmpf9txk9t7844
+RUN wget --quiet https://services.gradle.org/distributions/gradle-4.0-rc-1-all.zip && mv ./gradle-4.0-rc-1-all.zip /opt/.gradle/wrapper/dists/gradle-4.0-rc-1-all/f2e4agya6jovmpf9txk9t7844/
+RUN unzip /opt/.gradle/wrapper/dists/gradle-4.0-rc-1-all/f2e4agya6jovmpf9txk9t7844/gradle-4.0-rc-1-all.zip
 
 ENV GRADLE_USER_HOME /opt/.gradle
 
