@@ -57,24 +57,25 @@ RUN echo yes | sdkmanager "platforms;android-22"
 RUN echo yes | sdkmanager "platforms;android-21"
 
 RUN echo yes | sdkmanager "extras;android;m2repository"
-RUN echo yes | sdkmanager "extras;google;m2repository"
 RUN echo yes | sdkmanager "extras;google;google_play_services"
+RUN echo yes | sdkmanager "extras;google;m2repository"
 
 RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2"
 RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2"
 
-RUN echo yes | sdkmanager "system-images;android-24;google_apis;armeabi-v7a"
+RUN echo yes | sdkmanager "system-images;android-24;google_apis;x86_64"
 
 # Install gradle
-RUN mkdir -p /opt/.gradle/wrapper/dists/gradle-4.0-rc-1-all/f2e4agya6jovmpf9txk9t7844
-RUN wget --quiet https://services.gradle.org/distributions/gradle-4.0-rc-1-all.zip && mv ./gradle-4.0-rc-1-all.zip /opt/.gradle/wrapper/dists/gradle-4.0-rc-1-all/f2e4agya6jovmpf9txk9t7844/
-RUN unzip /opt/.gradle/wrapper/dists/gradle-4.0-rc-1-all/f2e4agya6jovmpf9txk9t7844/gradle-4.0-rc-1-all.zip
+RUN mkdir -p /opt/.gradle/wrapper/dists/gradle-4.1-milestone-1-all.zip/9uoz4qrz3xxqtt8z3tsnbtd3e
+RUN wget --quiet https://services.gradle.org/distributions/gradle-4.1-milestone-1-all.zip && mv ./gradle-4.1-milestone-1-all.zip /opt/.gradle/wrapper/dists/gradle-4.1-milestone-1-all.zip/9uoz4qrz3xxqtt8z3tsnbtd3e/
 
 ENV GRADLE_USER_HOME /opt/.gradle
 
+# Fix QT by copying libs to local directory
+RUN cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu
+
 # Create AVD
-RUN echo no | avdmanager create avd -n acib -k "system-images;android-24;google_apis;armeabi-v7a" -f --abi "armeabi-v7a" --tag "google_apis"
-RUN emulator -avd acib -engine classic -no-window -verbose -qemu -m 512 &
+RUN echo no | avdmanager create avd -n test -k "system-images;android-24;google_apis;x86_64" -f --abi "x86_64" --tag "google_apis"
 
 # Install openssh
 RUN apt-get update -y
