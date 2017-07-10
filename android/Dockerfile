@@ -43,6 +43,7 @@ RUN echo yes | sdkmanager "tools"
 
 RUN echo yes | sdkmanager "platform-tools"
 
+RUN echo yes | sdkmanager "build-tools;26.0.0"
 RUN echo yes | sdkmanager "build-tools;25.0.3"
 RUN echo yes | sdkmanager "build-tools;25.0.1"
 RUN echo yes | sdkmanager "build-tools;25.0.0"
@@ -50,6 +51,7 @@ RUN echo yes | sdkmanager "build-tools;24.0.3"
 RUN echo yes | sdkmanager "build-tools;23.0.3"
 RUN echo yes | sdkmanager "build-tools;22.0.1"
 
+RUN echo yes | sdkmanager "platforms;android-26"
 RUN echo yes | sdkmanager "platforms;android-25"
 RUN echo yes | sdkmanager "platforms;android-24"
 RUN echo yes | sdkmanager "platforms;android-23"
