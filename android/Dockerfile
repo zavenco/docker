@@ -68,8 +68,11 @@ RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;co
 RUN echo yes | sdkmanager "system-images;android-24;google_apis;x86_64"
 
 # Install gradle
-RUN mkdir -p /opt/.gradle/wrapper/dists/gradle-4.1-milestone-1-all/9uoz4qrz3xxqtt8z3tsnbtd3e
-RUN wget --quiet https://services.gradle.org/distributions/gradle-4.1-milestone-1-all.zip && mv ./gradle-4.1-milestone-1-all.zip /opt/.gradle/wrapper/dists/gradle-4.1-milestone-1-all/9uoz4qrz3xxqtt8z3tsnbtd3e/
+ENV GRADLE_VERSION gradle-4.1-rc-1-all
+ENV GRADLE_HASH 936kh1brdchce6fvd2c1o8t8x
+
+RUN mkdir -p /opt/.gradle/wrapper/dists/${GRADLE_VERSION}/${GRADLE_HASH}
+RUN wget --quiet https://services.gradle.org/distributions/${GRADLE_VERSION}.zip && mv ./${GRADLE_VERSION}.zip /opt/.gradle/wrapper/dists/${GRADLE_VERSION}/${GRADLE_HASH}/
 
 ENV GRADLE_USER_HOME /opt/.gradle
 
