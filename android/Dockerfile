@@ -43,6 +43,7 @@ RUN echo yes | sdkmanager "tools"
 
 RUN echo yes | sdkmanager "platform-tools"
 
+RUN echo yes | sdkmanager "build-tools;26.0.1"
 RUN echo yes | sdkmanager "build-tools;26.0.0"
 RUN echo yes | sdkmanager "build-tools;25.0.3"
 RUN echo yes | sdkmanager "build-tools;25.0.1"
