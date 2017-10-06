@@ -71,15 +71,6 @@ RUN echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;co
 
 RUN echo yes | sdkmanager "system-images;android-24;google_apis;x86_64"
 
-# Install gradle
-ENV GRADLE_VERSION gradle-4.1-all
-ENV GRADLE_HASH bzyivzo6n839fup2jbap0tjew
-
-RUN mkdir -p /opt/.gradle/wrapper/dists/${GRADLE_VERSION}/${GRADLE_HASH}
-RUN wget --quiet https://services.gradle.org/distributions/${GRADLE_VERSION}.zip && mv ./${GRADLE_VERSION}.zip /opt/.gradle/wrapper/dists/${GRADLE_VERSION}/${GRADLE_HASH}/
-
-ENV GRADLE_USER_HOME /opt/.gradle
-
 # Fix QT by copying libs to local directory
 RUN cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu
 
