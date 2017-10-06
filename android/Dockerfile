@@ -1,5 +1,6 @@
 FROM ubuntu:16.04
 
+
 # Clean and update sources
 RUN apt-get clean && apt-get update
 
@@ -39,10 +40,12 @@ ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools/:${ANDROID
 # Install and update tools
 RUN mkdir /root/.android && echo 'count=0' > /root/.android/repositories.cfg
 
+
 RUN echo yes | sdkmanager "tools"
 
 RUN echo yes | sdkmanager "platform-tools"
 
+RUN echo yes | sdkmanager "build-tools;26.0.2"
 RUN echo yes | sdkmanager "build-tools;26.0.1"
 RUN echo yes | sdkmanager "build-tools;26.0.0"
 RUN echo yes | sdkmanager "build-tools;25.0.3"
