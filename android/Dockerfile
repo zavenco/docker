@@ -42,6 +42,7 @@ RUN wget --output-document=android-sdk.tgz --quiet https://dl.google.com/android
 	mkdir /root/.android && echo 'count=0' > /root/.android/repositories.cfg && \
 	echo yes | sdkmanager "tools" && \
 	echo yes | sdkmanager "platform-tools" && \
+	echo yes | sdkmanager "build-tools;27.0.3" && \
 	echo yes | sdkmanager "build-tools;27.0.1" && \
 	echo yes | sdkmanager "build-tools;27.0.0" && \
 	echo yes | sdkmanager "build-tools;26.0.2" && \
