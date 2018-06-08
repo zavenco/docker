@@ -64,8 +64,7 @@ RUN wget --output-document=android-sdk.tgz --quiet https://dl.google.com/android
 	echo yes | sdkmanager "extras;android;m2repository" && \
 	echo yes | sdkmanager "extras;google;google_play_services" && \
 	echo yes | sdkmanager "extras;google;m2repository" && \
-	echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2" && \
-	echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2" && \
+	echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout;1.1.1" && \
 	echo yes | sdkmanager "system-images;android-24;google_apis;x86_64" && \
 # Fix QT by copying libs to local directory
 	cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu && \
