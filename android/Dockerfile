@@ -70,7 +70,7 @@ echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constr
 echo yes | sdkmanager "extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2" && \
 echo yes | sdkmanager "system-images;android-24;google_apis;x86_64" && \
 # Fix QT by copying libs to local directory
-cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu && \
+# cp -a $ANDROID_HOME/emulator/lib64/qt/lib/. /usr/lib/x86_64-linux-gnu && \
 # Create AVD
 echo no | avdmanager create avd -n test -k "system-images;android-24;google_apis;x86_64" -f --abi "x86_64" --tag "google_apis" && \
 # Set workspace
