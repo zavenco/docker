@@ -36,7 +36,7 @@ ENV ANDROID_HOME /opt/tools
 ENV PATH ${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools/:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/emulator
 
 # Download Android SDK
-RUN wget --output-document=android-sdk.tgz --quiet https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip && \
+RUN  wget --output-document=android-sdk.tgz --quiet https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip && \
 unzip android-sdk.tgz && mv ./tools /opt/tools && \
 # Install and update tools
  mkdir /root/.android && echo 'count=0' > /root/.android/repositories.cfg && \
