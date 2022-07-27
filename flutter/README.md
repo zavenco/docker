@@ -10,3 +10,10 @@ Export variables before building and pushing an image
 - `FLUTTER_VERSION`
 - `DOCKER_USER_NAME`
 - `DOCKER_PASSWORD`
+
+
+`docker login docker.zaven.co`
+
+You can add an image to this registry with the following commands: 
+`docker build -t docker.zaven.co/zaven/docker-flutter .`
+`docker push docker.zaven.co/zaven/docker-flutter`
