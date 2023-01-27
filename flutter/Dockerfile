@@ -16,11 +16,11 @@ ENV PATH ${PATH}:${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin
 ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin
 
 # comes from https://developer.android.com/studio/
-ENV ANDROID_SDK_TOOLS_VERSION 8512546
+ENV ANDROID_SDK_TOOLS_VERSION 9477386
 
 
 # comes from https://github.com/firebase/firebase-tools/releases
-ENV FIREBASE_VERSION=v11.16.0
+ENV FIREBASE_VERSION=v11.21.0
 
 RUN cd /opt \
     && apt-get update \
