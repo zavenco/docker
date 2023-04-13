@@ -20,7 +20,7 @@ ENV ANDROID_SDK_TOOLS_VERSION 9477386
 
 
 # comes from https://github.com/firebase/firebase-tools/releases
-ENV FIREBASE_VERSION=v11.21.0
+ENV FIREBASE_VERSION=v11.26.0
 
 RUN cd /opt \
     && apt-get update \
