@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 ubuntu:focal
+FROM --platform=linux/amd64 ubuntu:jammy
 
 ARG flutter_version
 
@@ -16,19 +16,19 @@ ENV PATH ${PATH}:${FLUTTER_HOME}/bin:${FLUTTER_HOME}/bin/cache/dart-sdk/bin
 ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin:${ANDROID_SDK_ROOT}/cmdline-tools/tools/bin
 
 # comes from https://developer.android.com/studio/
-ENV ANDROID_SDK_TOOLS_VERSION 9477386
+ENV ANDROID_SDK_TOOLS_VERSION 11076708
 
 
 # comes from https://github.com/firebase/firebase-tools/releases
-ENV FIREBASE_VERSION=v11.26.0
+ENV FIREBASE_VERSION=v13.3.0
 
 RUN cd /opt \
-    && apt-get update \
-    && apt-get install -y openjdk-16-jdk \
-    && apt-get install ca-certificates-java \
-    && apt-get install -y sudo wget zip unzip git openssh-client curl software-properties-common build-essential ruby-full ruby-bundler lib32stdc++6 libstdc++6 libpulse0 libglu1-mesa locales lcov --no-install-recommends \
+    && apt update \
+    && apt install -y openjdk-19-jdk \
+    && apt install ca-certificates-java \
+    && apt install -y sudo wget zip unzip git openssh-client curl software-properties-common build-essential ruby-full ruby-bundler lib32stdc++6 libstdc++6 libpulse0 libglu1-mesa locales lcov --no-install-recommends \
     # for x86 emulators
-    && apt-get install -y libxtst6 libnss3-dev libnspr4 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0 libgdk-pixbuf2.0-0 \
+    && apt install -y libxtst6 libnss3-dev libnspr4 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0 libgdk-pixbuf2.0-0 \
     && rm -rf /var/lib/apt/lists/* \
     && sudo sh -c 'echo "en_US.UTF-8 UTF-8" > /etc/locale.gen' \
     && sudo locale-gen \
